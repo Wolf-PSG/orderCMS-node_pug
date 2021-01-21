@@ -1,0 +1,55 @@
+//- researched table template using semantic-ui 
+doctype html
+html(lang='en')
+  head
+    title Vehicle Order
+    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.css')
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous")
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+    script.
+      $(document).ready(function(){
+        $('.deleteOrder').click(function(e) {
+          console.log(e.currentTarget.id);
+          const {id} = e.currentTarget;
+          $.ajax({
+            url: `/api/v1/order/${id}`,
+            type: 'DELETE',
+            contentType: 'application/json',
+            success: location.reload()
+          });
+        });
+      });
+    style.
+      table.ui.celled img { display: inline-block; }
+      footer { margin: 35px 0 15px 0; text-align: center }
+      a.create {text-align: right;}
+  body
+    main#main
+    h1.ui.center.aligned.header Orders 
+      a.create(href='http://localhost:8000/create')
+        i.fa.fa-plus(aria-hidden='true') 
+    .ui.container
+      table.ui.celled.table.center.aligned
+        thead
+          tr
+            th uuid
+            th Manufacturer
+            th Model
+            th Total Price
+            th Date
+            th Delete
+        tbody
+          for order in orders
+            tr
+              td
+                a(href=`http://localhost:8000/${order._id}`) #{order._id}
+              td #{order.manufacturer}
+              td #{order.model}
+              td #{order.total_price}
+              td #{order.date}
+              td
+                a.deleteOrder(id=`${order._id}`)
+                  i.fa.fa-times(aria-hidden='true') 
+          tr
+            th(colspan='6')
+    footer

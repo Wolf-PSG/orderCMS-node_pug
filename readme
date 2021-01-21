@@ -1,0 +1,27 @@
+GForce Techical Task
+by Parmjit Singh Gill
+
+Starting Server:
+npm start
+yarn start
+
+making requests:
+
+base url for orders
+http://localhost:8000/api/v1/order/
+        127.0.0.1
+        
+client application avalible on:
+http://localhost:8000/
+
+views:
+basic order management system
+requires page reload upon going back on history when create post/patch
+going back to localhost:8000 is easier when creating/patching order
+Would be fixed using JQuery and ajax request
+
+docker:
+docker pull wolfpsg/api
+sudo docker run -p 8000:8000 -d wolfpsg/api
+
+

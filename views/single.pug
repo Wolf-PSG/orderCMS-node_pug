@@ -1,0 +1,55 @@
+doctype html
+html(lang='en')
+  head
+    title Vehicle Order
+    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.css')
+  style.
+    input.ui.fluid.large.grey.submit.button { width: 100%;}
+    div.container {max-width: 500px; margin: auto; padding: 10px;}
+    label { padding: 5px; }
+    form { max-width: 100%; position: relative;}
+  body
+    div.ui.middle.aligned.center
+    //- checks for new orders
+    if orders
+      for order in orders
+        h1.ui.center.aligned.header Order: #{order._id}
+          div.ui.center.aligned.column
+            //-?_method=PATCH overrides method call as xhttp only allows post and get requests -- express middleware handles it.
+            form(action=`/api/v1/order/${order._id}?_method=PATCH`, method="post")
+              div.ui.stacked.segment
+                div.ui.left.label.input
+                  label Manufacturer:
+                  //- creates selection of potentail manufacturers
+                  select.ui.selection.dropdown(name="manufacturer", id ='')
+                    each val in ['','ford', 'mercedes', 'bmw', 'kia', 'nissan', 'range rover']
+                      if val == order.manufacturer
+                        option(value=val name=val selected=true) #{val}
+                      else
+                        option=val
+                div.ui.left.label.input
+                  label Model:  
+                  input(type='text', name='model', value=`${order.model || ''}`)
+                div.ui.left.label.input
+                  label Total Price:
+                  input(type='text', name='total_price', value=`${order.total_price || ''}`)
+                div.container
+                  input.ui.fluid.large.grey.submit.button(type='submit', value='Submit')
+    else
+      h1.ui.center.aligned.header New Order
+        div.ui.center.aligned.column
+          form(action=`/api/v1/order/`, method="post")
+            div.ui.stacked.segment
+              div.ui.left.label.input
+                label Manufacturer:
+                select.ui.selection.dropdown(name="manufacturer", id ='')
+                  each val in ['','ford', 'mercedes', 'bmw', 'kia', 'nissan', 'range rover']
+                    option=val
+              div.ui.left.label.input
+                label Model:  
+                input(type='text', name='model', value='')
+              div.ui.left.label.input
+                label Total Price:
+                input(type='text', name='total_price', value='')
+              div.container
+                input.ui.fluid.large.grey.submit.button(type='submit', value='Submit')
