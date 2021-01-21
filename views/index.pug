@@ -26,7 +26,7 @@ html(lang='en')
   body
     main#main
     h1.ui.center.aligned.header Orders 
-      a.create(href='http://localhost:8000/create')
+      a.create(href='/create')
         i.fa.fa-plus(aria-hidden='true') 
     .ui.container
       table.ui.celled.table.center.aligned
@@ -42,7 +42,7 @@ html(lang='en')
           for order in orders
             tr
               td
-                a(href=`http://localhost:8000/${order._id}`) #{order._id}
+                a(href=`/${order._id}`) #{order._id}
               td #{order.manufacturer}
               td #{order.model}
               td #{order.total_price}
